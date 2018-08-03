@@ -2,6 +2,7 @@
 #include<fstream>
 #include<string>
 #include<vector>
+#include<map>
 #include<exception>
 
 using namespace std;
@@ -11,6 +12,7 @@ public:
 	vector<string> giveCompletion(string, int);
 	void addFrequent(string);
 private:
+	map<string, int> fwords;
 	vector<string> words;
 };
 
@@ -65,10 +67,55 @@ vector<string> Completer::giveCompletion(string word, int limit = INT_MAX)
 
 	return res;
 }
+//Sperates string into vector of strings
+vector<string> split(string str, char delimiter)
+{
+	vector<string> res;
+	int len = str.length();
+	for (int i = 0; i < len; i++)
+	{
+		string part = "";
+		if (str[i] == delimiter)
+		{
+			if (part != "") 
+				res.push_back(part);
 
+		}
+	}
+	return res;
+}
 
 //increase frequency of usage of certain words
 void Completer::addFrequent(string word)
 {
-	//TODO : fill function
+	ofstream file;
+	file.open("fwords.txt");
+	//loading dictionary of words by frequency key
+	map<string, int> wordsDict;
+	ifstream infile("fwords.txt");
+	string line;
+	if (infile.is_open())
+	{
+		while (getline(infile, line))
+		{
+			vector<string> parts = split(line, ':');
+			wordsDict.insert(pair<string, int>(parts[0], stoi(parts[1])));
+		}
+		infile.close();
+	}
+	map<string, int>::iterator it = wordsDict.find(word);
+	if (it != wordsDict.end())
+		it->second++;
+	else
+		wordsDict.insert(pair<string, int>(word, 1));
+
+	//Write map to file
+	for (map<string, int>::iterator i = wordsDict.begin(); i != wordsDict.end(); i++)
+	{
+		file << i->first << ":" << i->second << endl;
+	}
+	file.close();
+	
+
+	
 }
