@@ -13,9 +13,10 @@ int main(void)
 	long start = (time.wSecond * 1000) + time.wMilliseconds;
 
 	Completer c;
-	vector<string> s = c.giveCompletion("angel");
+	/*vector<string> s = c.giveCompletion("angel");
 	for (int i = 0; i < s.size(); i++)
-		cout << s[i] << endl;
+		cout << s[i] << endl;*/
+	c.addFrequent("where");
 	
 	GetSystemTime(&time);
 	long end = (time.wSecond * 1000) + time.wMilliseconds;

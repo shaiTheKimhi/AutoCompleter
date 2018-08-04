@@ -72,16 +72,21 @@ vector<string> split(string str, char delimiter)
 {
 	vector<string> res;
 	int len = str.length();
+	string part = "";
 	for (int i = 0; i < len; i++)
 	{
-		string part = "";
+		
 		if (str[i] == delimiter)
 		{
-			if (part != "") 
+			if (part != "")
 				res.push_back(part);
-
+			part = "";
 		}
+		else
+			part += str[i];
 	}
+	if(part!="")
+		res.push_back(part);
 	return res;
 }
 
@@ -89,7 +94,6 @@ vector<string> split(string str, char delimiter)
 void Completer::addFrequent(string word)
 {
 	ofstream file;
-	file.open("fwords.txt");
 	//loading dictionary of words by frequency key
 	map<string, int> wordsDict;
 	ifstream infile("fwords.txt");
@@ -103,6 +107,7 @@ void Completer::addFrequent(string word)
 		}
 		infile.close();
 	}
+	file.open("fwords.txt");
 	map<string, int>::iterator it = wordsDict.find(word);
 	if (it != wordsDict.end())
 		it->second++;

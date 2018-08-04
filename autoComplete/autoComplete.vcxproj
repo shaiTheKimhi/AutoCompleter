@@ -117,6 +117,7 @@
     <ClInclude Include="Completer.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="fwords.txt" />
     <Text Include="words.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
